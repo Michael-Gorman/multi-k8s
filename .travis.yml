@@ -1,0 +1,27 @@
+sudo: required
+services:
+  -docker
+
+before_install:
+  - docker build -t mthc/react-test -f ./clinet/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true mthc/react-test npm run test -- --covergae
+
+after_success:
+  - docker build -t mthc/complex-client ./client
+  - docker build -t mthc/complex-nginx ./nginx
+  - docker build -t mthc/complex-server ./server
+  - docker build -t mthc/complex-worker ./worker
+
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-west-1"
+  app: "Docker React app"
+  env: "DockerReactapp-env"
+  bucket_name: "elasticbeanstalk-eu-west-1-634113382203"
+  bucket_path: "Docker React app"
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: "$AWS_SECRET_KEY"
