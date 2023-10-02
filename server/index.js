@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 // Postgres Client Setup
 const { Pool } = require('pg');
 const pgClient = new Pool({
-    user: keys.pgUSer,
+    user: keys.pgUser,
     host: keys.pgHost,
     database: keys.pgDatabase,
     password: keys.pgPassword,
@@ -68,6 +68,6 @@ app.post('/values', async (req, res) => {
     res.send({ working: true });
 });
 
-app.listen(5000, err => {
-    console.log('Listening')
+app.listen(5000, (err) => {
+    console.log('Listening');
 });
