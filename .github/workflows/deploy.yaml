@@ -61,8 +61,3 @@ jobs:
           kubectl set image deployments/server-deployment server=mthc/multi-server:${{ env.SHA }}
           kubectl set image deployments/client-deployment client=mthc/multi-client:${{ env.SHA }}
           kubectl set image deployments/worker-deployment worker=mthc/multi-worker:${{ env.SHA }}
-
-      - name: Apply Dashboard
-        run: |-
-          kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
-          kubectl apply -f k8s_dash
